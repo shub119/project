@@ -1,21 +1,87 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="container-fluid">
+    <div class="row justify-content-center" style="margin-top: 40px;">
+        <div class="col-8">
+            <div class="jumbotron">
+                <h3>Form Custom Valdiation</h3>
 
-<router-outlet></router-outlet>
+                <div>
+                    <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" formControlName="email"
+                                placeholder="sample@example.com"
+                                [ngClass]="{'is-invalid':form.get('email').touched && form.get('email').invalid}" />
+                            <div *ngIf="form.get('email').touched && form.get('email').invalid"
+                                class="invalid-feedback">
+                                <div *ngIf="form.get('email').errors.required">Email is required</div>
+                                <div *ngIf="form.get('email').errors.email || form.get('email').errors.pattern">Email
+                                    must be a valid format(eg. sample@example.com)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" formControlName="password"
+                                placeholder="Min 8 characters allowed"
+                                [ngClass]="{'is-invalid':form.get('password').touched && form.get('password').invalid}" />
+                            <div *ngIf="form.get('password').touched && form.get('password').invalid"
+                                class="invalid-feedback">
+                                <div *ngIf="form.get('password').errors.required">Password is required</div>
+                                <div *ngIf="form.get('password').errors.minlength">Password must be at least 8
+                                    charactor</div>
+                                <div *ngIf="form.get('password').errors.pattern">Password didn't match its creteria
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="passwordConfirm">Confirm Password</label>
+                            <input type="password" class="form-control" id="passwordConfirm" formControlName="cnfpass"
+                                placeholder="please confirm your Password"
+                                [ngClass]="{'is-invalid':form.get('cnfpass').touched && form.get('cnfpass').invalid}" />
+                            <div *ngIf="form.get('cnfpass').touched && form.get('cnfpass').invalid"
+                                class="invalid-feedback">
+                                <div *ngIf="form.get('cnfpass').errors.required">Confirm your password</div>
+                                <div *ngIf="form.get('cnfpass').errors.mustMatch">Passwords should match</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" formControlName="firstName"
+                                placeholder="enter first Name here"
+                                [ngClass]="{'is-invalid':form.get('firstName').touched && form.get('firstName').invalid}"
+                                required />
+                            <div *ngIf="form.get('firstName').touched && form.get('firstName').invalid"
+                                class="invalid-feedback">
+                                <div *ngIf="form.get('firstName').errors.required">First Name is required</div>
+                                <div *ngIf="form.get('firstName').errors.minlength">At least 2 charachters are required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mobileNumber">Mobile Number</label>
+                            <input required type="text" class="form-control" formControlName="mobile"
+                                placeholder="Enter Mobile Number"
+                                [ngClass]="{'is-invalid':form.get('mobile').touched && form.get('mobile').invalid}"
+                                required />
+                            <div *ngIf="form.get('mobile').touched && form.get('mobile').invalid"
+                                class="invalid-feedback">
+                                <div *ngIf="form.get('mobile').errors.required">Mobile No is required.</div>
+                                <div *ngIf="form.get('mobile').errors.minlength">
+                                    Length Should be 10 numbers Only excluding country Code</div>
+                                <div *ngIf="form.get('mobile').errors.maxlength">
+                                    Length Should be 10 numbers Only excluding country Code</div>
+                                <div *ngIf="form.get('mobile').errors.pattern">It should be Numeric Only</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" (click)="onSubmit()">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
